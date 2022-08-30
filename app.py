@@ -30,7 +30,7 @@ df_v2=pd.concat([df_netflix,df_amazon,df_hulu,df_disney])
 
 
 list_of_columns =['Shows by year','Shows by age group','Shows by rating', 'Shows by platform', 'Top 5 shows by rating']
-list_of_variables=['Year','Age','IMDb','Custom','Platform']
+list_of_variables=['Year','Age','IMDb','Platform']
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)

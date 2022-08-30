@@ -53,12 +53,12 @@ def make_figure(varname):
     mycolorbartitle = "Count"
     if varname == "Top 5 Shows":         
        df_slice=df[ list_of_variables[list_of_columns.index(varname)]].value_counts()
-       df_slice_v2=pd.Dataframe({list_of_variables[list_of_columns.index(varname)]: df_slice.index,'Count':df_slice.values})
+       df_slice_v2=pd.DataFrame({list_of_variables[list_of_columns.index(varname)]: df_slice.index,'Count':df_slice.values})
        fig = px.histogram(df_slice_v2,x=list_of_variables[list_of_columns.index(varname)],y='Count',barmode='group',height=400)
        return fig
     else:
        df_slice=df[ list_of_variables[list_of_columns.index(varname)]].value_counts()
-       df_slice_v2=pd.Dataframe({list_of_variables[list_of_columns.index(varname)]: df_slice.index,'Count':df_slice.values})
+       df_slice_v2=pd.DataFrame({list_of_variables[list_of_columns.index(varname)]: df_slice.index,'Count':df_slice.values})
        fig = px.histogram(df_slice_v2,x=list_of_variables[list_of_columns.index(varname)],y='Count',barmode='group',height=400)
        return fig
     

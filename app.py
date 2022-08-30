@@ -71,12 +71,7 @@ def make_figure(varname):
        df['Rating']=df['IMDb'].str.rstrip('/10')
        df_titles=df.sort_values(by='IMDb',ascending=False).head(10)
        df_titles_v2=pd.DataFrame({'Title':df_titles['Title'],'IMDb':df_titles['Rating'].astype(float)})
-       fig = px.bar(df_titles_v2, 
-                   x="Title", 
-                   y="IMDb",
-                   height=400
-                  )
-              â
+       fig = px.bar(df_titles_v2, x="Title", y="IMDb",height=400)
        return fig
     else:
        df_slice=df_v2[ list_of_variables[list_of_columns.index(varname)]].value_counts()

@@ -68,9 +68,15 @@ def make_figure(varname):
     mycolorscale = 'ylorrd' # Note: The error message will list possible color scales.
     mycolorbartitle = "Count"
     if varname == "Top 5 shows by rating":         
-       df_slice=df_v2.sort_values(by='IMDb',ascending=False).head(5) 
-       df_slice_v2=pd.DataFrame({'Show Title': df_slice['Title'],'Rating':df_slice['IMDb']})
-       fig = px.histogram(df_slice_v2,x='Show Title',y='Rating',barmode='group',height=400)
+       df['Rating']=df['IMDb'].str.rstrip('/10')
+       df_titles=df.sort_values(by='IMDb',ascending=False).head(10)
+       df_titles_v2=pd.DataFrame({'Title':df_titles['Title'],'IMDb':df_titles['Rating'].astype(float)})
+       fig = px.bar(df_titles_v2, 
+                   x="Title", 
+                   y="IMDb",
+                   height=400
+                  )
+              â
        return fig
     else:
        df_slice=df_v2[ list_of_variables[list_of_columns.index(varname)]].value_counts()

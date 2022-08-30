@@ -4,7 +4,7 @@ from dash.dependencies import Input, Output, State
 
 import plotly.graph_objs as go
 import pandas as pd
-
+import plotly.express as px
 ########### Define your variables ######
 
 tabtitle = 'Analysis of Streaming Platforms'

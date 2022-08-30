@@ -13,8 +13,24 @@ githublink = 'https://github.com/purnimavenkatram/exploratory-data-analysis'
 # here's the list of possible columns to choose from.
 
 df = pd.read_csv('assets/tv_shows.csv',encoding='utf-8')
-list_of_columns =['Shows by year','Shows by age group','Shows by rating', 'Top 5 shows']
-list_of_variables=['Year','Age','IMDb','Custom']
+df_netflix=df[df['Netflix']==1].copy()
+df_netflix['Platform']='Netflix'
+
+df_amazon=df[df['Prime Video']==1].copy()
+df_amazon['Platform']='Prime Video'
+
+df_hulu=df[df['Hulu']==1].copy()
+df_hulu['Platform']='Hulu'
+
+df_disney=df[df['Disney+']==1].copy()
+df_disney['Platform']='Disney+'
+
+df_v2=pd.concat([df_netflix,df_amazon,df_hulu,df_disney])
+
+
+
+list_of_columns =['Shows by year','Shows by age group','Shows by rating', 'Shows by platform', 'Top 5 shows by rating']
+list_of_variables=['Year','Age','IMDb','Custom','Platform']
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -51,13 +67,13 @@ def make_figure(varname):
     mygraphtitle = f' {varname}'
     mycolorscale = 'ylorrd' # Note: The error message will list possible color scales.
     mycolorbartitle = "Count"
-    if varname == "Top 5 Shows":         
-       df_slice=df[ list_of_variables[list_of_columns.index(varname)]].value_counts()
-       df_slice_v2=pd.DataFrame({list_of_variables[list_of_columns.index(varname)]: df_slice.index,'Count':df_slice.values})
-       fig = px.histogram(df_slice_v2,x=list_of_variables[list_of_columns.index(varname)],y='Count',barmode='group',height=400)
+    if varname == "Top 5 shows by rating":         
+       df_slice=df_v2.sort_values(by='IMDb',ascending=False).head(5) 
+       df_slice_v2=pd.DataFrame({'Show Title': df_slice['Title'],'Rating':df_slice['IMDb']})
+       fig = px.histogram(df_slice_v2,x='Show Title',y='Rating',barmode='group',height=400)
        return fig
     else:
-       df_slice=df[ list_of_variables[list_of_columns.index(varname)]].value_counts()
+       df_slice=df_v2[ list_of_variables[list_of_columns.index(varname)]].value_counts()
        df_slice_v2=pd.DataFrame({list_of_variables[list_of_columns.index(varname)]: df_slice.index,'Count':df_slice.values})
        fig = px.histogram(df_slice_v2,x=list_of_variables[list_of_columns.index(varname)],y='Count',barmode='group',height=400)
        return fig
